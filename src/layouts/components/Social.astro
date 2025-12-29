@@ -1,6 +1,7 @@
 ---
 const { source, className } = Astro.props;
 import DynamicIcon from "@/helpers/DynamicIcon";
+import { BiLibrary } from "react-icons/bi";
 
 export interface ISocial {
   name: string;
@@ -15,6 +16,11 @@ const iconMap: Record<string, string> = {
   instagram: "FaInstagram",
   linkedin: "FaLinkedin",
   youtube: "FaYoutube",
+  wechat: "FaWeixin",
+  qq: "FaQq",
+  bilibili: "SiBilibili",
+  github: "FaGithub",
+  twitter: "FaTwitter",
 };
 
 const normalize = (src: any): ISocial[] => {

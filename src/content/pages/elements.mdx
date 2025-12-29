@@ -1,10 +1,87 @@
 ---
-title: "Elements"
+title: "Markdown 速成"
 meta_title: ""
-description: "this is meta description"
+description: "建议在博客里面使用该文章推荐的语法，以获得最佳的显示效果。"
 draft: false
 ---
 
+### 博客文章信息行的填写注意事项
+
+对于一篇完整的文章，他的信息行如下：
+
+```plaintext
+---
+title: 我的博客
+meta_title: " "
+description: "这是一篇我的博客"
+date: 2025-12-28
+image: /images/posts/cover.jpg
+categories: ["博客","blog"]
+authors: ["zzx","wzm"]
+tags: ["tag1", "tag2"]
+draft: false
+---
+```
+
+注意事项：
+
+1. `date`和`draft`字段<mark>**不能**加引号</mark>，`title`字段可加可不加
+
+2. date字段的格式必须是YYYY-MM-DD,后面可以加时间，例如`2025-12-28T05:00:00Z`，表示UTC时间的2025年12月28日凌晨5点。如果不加时间，默认是当天的00:00:00时间。
+3. `categories`, `authors`, `tags`字段的值是一个数组，即使只有一个元素也需要用`[]`括起来。并且且数组内的元素**需要加引号**，例如:
+
+    ```markdown
+    ["分类1", "分类2"] ## 正确
+    ['分类1', '分类2'] # 错误
+    [分类1, 分类2]     # 错误
+    []              # 正确
+    [“分类1”，"分类2"]# 错误，注意引号和逗号必须是英文
+    ```
+
+    `authors`字段用于表示文章的作者，可以有多个作者，填写时注意名字要和`src/content/authors/`文件夹下的**作者文件名**一致（不带扩展名）。例如`authors: ["wzm", "zzx"]`表示这篇文章的作者是`src/content/authors/wzm.md`和`src/content/authors/zzx.md`两个文件中定义的作者。
+
+4. `draft`字段的值只能是`true`或`false`，不能加引号。如果是`true`，表示这篇文章是草稿，不会被发布。
+5. `description`字段用于文章的简短描述，需要加引号，建议填写，这是没打开文章时的预览文本。
+6. `image`字段用于文章的封面图片。图片路径是**相对于** `public`文件夹的路径，例如`/images/posts/cover.jpg`表示图片在`public/images/posts/cover.jpg`。<mark>一般把封面图片放在</mark>`public/images/posts/`文件夹下。
+7. 每个人写文章的时候注意一下`categories`和`tags`里内容的复用率，避免出现有100个几乎一样的category然后每个里面只有一篇文章的情况。
+
+---
+
+### 作者文件信息行的填写注意事项
+
+对于每个作者文件，位于`src/content/authors/`文件夹下，例如`src/content/authors/zzx.md`
+
+其中`.md`文件的文件名（不带扩展名）就是作者的标识符，例如`zzx`。
+
+```plaintext
+---
+title: 作者名字
+meta_title: ""
+image: 
+description: 
+social:
+    qq: 
+    wechat: 
+    bilibili:
+---
+```
+
+注意事项：
+
+1. `title`字段用于表示作者的名字，建议和作者文件名一致。
+
+2. `image`字段用于表示作者的头像图片。图片路径是相对于`public`文件夹的路径，例如`/images/authors/zzx.jpg`。建议放在`public/images/authors/`文件夹下，并且图片命名和作者文件名一致，例如`zzx.jpg`。
+
+3. qq和wechat字段用于表示作者的QQ和微信联系方式，建议不要填qq号，这个仓库是公开的，虽然说被爆破的概率极低，但还是别填，免得给你盗了。想填的话填bilibili主页链接也是可以的。
+4. social字段里面不填的部分不能留空，建议填成空字符串`""`，否则会报错。
+
+---
+
+### 标题的表示
+
+用`#`表示标题等级，`#`越多，标题等级越低:最多支持6级标题。
+
+```plaintext
 # Heading 1
 
 ## Heading 2
@@ -16,92 +93,208 @@ draft: false
 ##### Heading 5
 
 ###### Heading 6
+```
+
+对应效果如下：
+
+# 一级标题
+
+## 二级标题
+
+### 三级标题
+
+#### 四级标题
+
+##### 五级标题
+
+###### 六级标题
 
 ---
 
-### Paragraph
+### 段落
 
-Did you come here for something in particular or just general Riker-bashing? And blowing into maximum warp speed, you appeared for an instant to be in two places at once. We have a saboteur aboard. We know you’re dealing in stolen ore. But I wanna talk about the assassination attempt on Lieutenant Worf. Could someone survive inside a transporter buffer for 75 years? Fate. It protects fools, little children, and ships.
-
-Did you come here for something in particular or just general Riker-bashing? And blowing into maximum warp speed, you appeared for an instant to be in two places at once. We have a saboteur aboard. We know you’re dealing in stolen ore. But I wanna talk about the assassination attempt on Lieutenant Worf. Could someone survive inside a transporter buffer for 75 years? Fate. It protects fools, little children, and ships.
+这是一个段落示例。你来这里是为了什么特别的事，还是只是为了吐槽瑞克？当你加速到最大曲速时，你似乎瞬间同时出现在了两个地方。我们船上有个破坏者。我们知道你在做被盗矿石的交易。但我想谈谈针对沃尔夫中尉的暗杀企图。有人能在传送缓冲器里存活75年吗？命运。它保护傻瓜、小孩和船只。
 
 ---
 
-### Emphasis
+### 强调
 
-1. Did you come here for something in **particular** or just general
+1. 你来这里是为了 **特别** 的事情还是只是随便看看
 
-2. Did you come here for something in <ins>particular</ins>
+    黑体加粗的方式如下，效果如上:
 
-3. _Did you come here_
+    ```plaintext
+    你来这里是为了 **特别** 的事情还是只是随便看看
+    ```
 
-4. Did you come here for **something** in particular
+2. 你来这里是为了 <ins>特别</ins> /<u>特别</u>的事情
 
-5. Did you come here for something in particular
+    下划线（html风格）的方式如下，效果如上:
 
-6. Did you come here for something in particular
+    ```html
+    你来这里是为了 <ins>特别</ins> 的事情
 
-7. URLs and URLs in angle brackets will automatically get turned into links. [http://www.example.com](http://www.example.com) or
+    或
 
-8. [http://www.example.com](http://www.example.com) and sometimes example.com (but not on Github, for example).
+    你来这里是为了 <u>特别</u> 的事情
+    ```
+
+3. _你来这里_
+
+    斜体的方式（markdown风格）如下，效果如上:
+
+    ```plaintext
+    _你来这里_
+    ```
+
+4. ~~你来这里~~
+
+    删除线的方式如下，效果如上，注意是英文波浪线喵
+
+    ```plaintext
+    ~~你来这里~~
+    ```
+
+5. 你来这里是为了 <mark>特别</mark> 的事情
+
+    黄色高亮的方式（html风格）如下，效果如上:
+
+    ```html
+    你来这里是为了 <mark>特别</mark> 的事情
+    ```
 
 ---
 
-### Link
+### 链接
 
-[I'm an inline-style link](https://www.google.com)
+链接的语法和格式有多种方式，下面是一些常见的例子：
 
-[I'm an inline-style link with title](https://www.google.com "Google's Homepage")
+[这是一个行内链接](https://www.google.com)
 
-[I'm a reference-style link][arbitrary case-insensitive reference text]
+```markdown
+[这是一个行内链接](https://www.google.com)
+```
 
-[I'm a relative reference to a repository file](../blob/master/LICENSE)
+[这是一个带标题的行内链接](https://www.google.com "Google 的主页")
 
-[You can use numbers for reference-style link definitions][1]
+```markdown
+[这是一个带标题的行内链接](https://www.google.com "Google 的主页")
+```
 
-Or leave it empty and use the [link text itself].
+[这是一个参考式链接][arbitrary case-insensitive reference text]
 
-example.com (but not on Github, for example).
+```markdown
+[这是一个参考式链接][arbitrary case-insensitive reference text]
+```
 
-Some text to show that the reference links can follow later.
+下面这个不建议使用，在网页上跳转不好使
+
+[这是一个指向仓库文件的相对参考链接](../blob/master/LICENSE)
+
+```markdown
+[这是一个指向仓库文件的相对参考链接](../blob/master/LICENSE)
+```
+
+[你可以使用数字作为参考链接的定义][1]
+
+```markdown
+[你可以使用数字作为参考链接的定义][1]
+```
+
+或者留空并使用 [链接文本本身]。
+
+```markdown
+或者留空并使用 [链接文本本身]。
+```
+
+一些文本显示参考链接可以在后面定义。
 
 [arbitrary case-insensitive reference text]: https://www.themefisher.com
 [1]: https://gethugothemes.com
-[link text itself]: https://www.getjekyllthemes.com
+[链接文本本身]: https://www.getjekyllthemes.com
 
 ---
 
-### Ordered List
+### 有序列表
 
-1. List item
-2. List item
-3. List item
-4. List item
-5. List item
+1. 列表项
+2. 列表项
+3. 列表项
+
+```plaintext
+1. 列表项
+2. 列表项
+3. 列表项
+```
+
+加宽行距只需要12之间加一个回车
+
+1. 列表项
+
+2. 列表项
+3. 列表项
+
+```plaintext
+1. 列表项
+
+2. 列表项
+3. 列表项
+```
 
 ---
 
-### Unordered List
+### 无序列表
 
-- List item
-- List item
-- List item
-- List item
-- List item
+尽管无序列表有三种表示方式，但推荐在一篇文章中只使用一种，以保持一致性。
+
+- 列表项
+* 列表项
++ 列表项
+
+```plaintext
+- 列表项
+* 列表项
++ 列表项
+```
+
+加宽行距的方式和有序列表一样
 
 ---
 
-### Code and Syntax Highlighting
+### 代码和语法高亮
+
+#### 行内代码
+
+用\` 和\` 包围来表示这是一个行内代码示例：`console.log("Hello, World!");`
+
+```plaintext
+这是一个行内代码示例：`console.log("Hello, World!");`
+```
+
+#### 代码块
+
+用\`\`\`cpp 来表示代码块的开始，用\`\`\` 来表示代码块的结束。
+
+cpp的位置是用来指定代码的语言，从而实现语法高亮。
+
+支持的语言有：bash, css, html, javascript, json, jsx, markdown, mdx, python, scss, shell, sql, tsx, typescript, vue 等等。
+
+```bash
+npm install -g @vue/cli
+vue create my-project
+cd my-project
+npm run serve
+```
 
 #### HTML
 
 ```html
 <ul>
   <li class="nav-item">
-    <a class="nav-link" href="/">Home</a>
+    <a class="nav-link" href="/">首页</a>
   </li>
   <li class="nav-item">
-    <a class="nav-link" href="about/">About</a>
+    <a class="nav-link" href="about/">关于</a>
   </li>
 </ul>
 ```
@@ -131,123 +324,182 @@ window.addEventListener("load", (e) => {
 
 ---
 
-### Button
+### 按钮
 
-<Button label="Solid" link="#" style="solid" />
-<Button label="Outline" link="#" style="outline" />
+这个可以用来做链接按钮，挺有意思的。
 
----
+<Button label="实心按钮" link="#" style="solid" />
 
-### Quote
+```html
+<Button label="实心按钮" link="#" style="solid" />
+```
 
-> Did you come here for something in particular or just general Riker-bashing? And blowing into maximum warp speed, you appeared for an instant to be in two places at once.
+<Button label="描边按钮" link="#" style="outline" />
 
----
-
-### Notice
-
-<Notice type="note">This is a simple note.</Notice>
-
-<Notice type="tip">This is a simple note.</Notice>
-
-<Notice type="info">This is a simple note.</Notice>
-
-<Notice type="warning">This is a simple note.</Notice>
+```html
+<Button label="描边按钮" link="#" style="outline" />
+```
 
 ---
 
-### Tab
+### 引用
+
+用`>` 来表示引用：
+
+> 你来这里是为了什么特别的事，还是只是为了吐槽瑞克？当你加速到最大曲速时，你似乎瞬间同时出现在了两个地方。
+
+---
+
+### 提示框 Notice
+
+这个博客用的是html风格，语法有点冗长，到时候可以简化一下
+
+<Notice type="note">这是一个简单的笔记。</Notice>
+
+```html
+<Notice type="note">这是一个简单的笔记。</Notice>
+```
+
+<Notice type="tip">这是一个简单的提示。</Notice>
+
+```html
+<Notice type="tip">这是一个简单的提示。</Notice>
+```
+
+<Notice type="info">这是一个简单的信息。</Notice>
+
+```html
+<Notice type="info">这是一个简单的信息。</Notice>
+```
+
+<Notice type="warning">这是一个简单的警告。</Notice>
+
+```html
+<Notice type="warning">这是一个简单的警告。</Notice>
+```
+
+---
+
+### 标签页 Tab
+
+Tab的作用是一个小框里面可以切换不同的内容：
 
 <Tabs client:load>
 
-<Tab name="Tab 1">
+<Tab name="标签页 1">
 
-#### Did you come here for something in particular?
+#### 你来这里是为了什么特别的事？
 
-Did you come here for something in particular or just general Riker-bashing? And blowing into maximum warp speed, you appeared for an instant to be in two places at once. We have a saboteur aboard. We know you’re dealing in stolen ore. But I wanna talk about the assassination attempt on Lieutenant Worf.
-
-</Tab>
-
-<Tab name="Tab 2">
-
-#### I wanna talk about the assassination attempt
-
-Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.
-
-Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.
+你来这里是为了什么特别的事，还是只是为了吐槽瑞克？当你加速到最大曲速时，你似乎瞬间同时出现在了两个地方。我们船上有个破坏者。我们知道你在做被盗矿石的交易。但我想谈谈针对沃尔夫中尉的暗杀企图。
 
 </Tab>
 
-<Tab name="Tab 3">
+<Tab name="标签页 2">
 
-#### We know you’re dealing in stolen ore
+#### 还是只是为了吐槽瑞克？
 
-Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.
+你来这里是为了什么特别的事，还是只是为了吐槽瑞克？当你加速到最大曲速时，你似乎瞬间同时出现在了两个地方。我们船上有个破坏者。我们知道你在做被盗矿石的交易。但我想谈谈针对沃尔夫中尉的暗杀企图。
 
-Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo
+</Tab>
+
+<Tab name="标签页 3">
+
+#### 当你加速到最大曲速时
+
+你似乎瞬间同时出现在了两个地方。我们船上有个破坏者。我们知道你在做被盗矿石的交易。但我想谈谈针对沃尔夫中尉的暗杀企图。有人能在传送缓冲器里存活75年吗？命运。它保护傻瓜、小孩和船只。
 
 </Tab>
 
 </Tabs>
 
+对应的代码如下：
+
+```html
+<Tabs client:load>  // 总的Tabs 组件开始
+<Tab name="标签页 1">  //每个tab内容开始
+#### tab1标题
+
+tab1内容
+
+</Tab>  // 每个tab内容结束
+</Tabs>  // 总的Tabs 组件结束
+```
+
 ---
 
-### Table
+### 表格
 
-| #   |    First     |     Last     |       Handle |
+| #   |    名     |     姓     |       昵称 |
 | :-- | :----------: | :----------: | -----------: |
-| 1   | Row:1 Cell:1 | Row:1 Cell:2 | Row:1 Cell:3 |
-| 2   | Row:2 Cell:1 | Row:2 Cell:2 | Row:2 Cell:3 |
-| 3   | Row:3 Cell:1 | Row:3 Cell:2 | Row:3 Cell:3 |
+| 1   | 行:1 列:1 | 行:1 列:2 | 行:1 列:3 |
+| 2   | 行:2 列:1 | 行:2 列:2 | 行:2 列:3 |
+| 3   | 行:3 列:1 | 行:3 列:2 | 行:3 列:3 |
+
+对应的代码如下：
+
+```markdown
+| #   |    名     |     姓     |       昵称 |
+| :-- | :----------: | :----------: | -----------: |  #对齐方式在这一行声明
+| 1   | 行:1 列:1 | 行:1 列:2 | 行:1 列:3 |
+| 2   | 行:2 列:1 | 行:2 列:2 | 行:2 列:3 |
+| 3   | 行:3 列:1 | 行:3 列:2 | 行:3 列:3 |
+
+```
+
+`|` 用来分隔列。注意表格的每一行都需要以`|`开头和结尾。对于最后一列，不加`|`也可以，但建议加上以保持一致性。
+
+在第二行声明一列的对其方式`:-- `左对齐，`:--:` 居中对齐，`--:` 右对齐。注意冒号是<mark>英文</mark>冒号`:`，中间的`-`数量没有限制，但必须至少有一个。
 
 ---
 
-### Accordion
+### 手风琴(下拉列表) Accordion
 
-<Accordion client:load title="Why should you need to do this?">
+<Accordion client:load title="为什么你需要这样做？">
 
-- This is a thing.
-- This is a thing.
-- This is a thing.
-- This is a thing.
-- This is a thing.
+- 这是一个条目。
+- 这是一个条目。
+- 这是一个条目。
+- 这是一个条目。
+- 这是一个条目。
 
 </Accordion>
 
-<Accordion client:load title="How can I adjust Horizontal centering">
+对应代码如下：
 
-- This is a thing.
-- This is a thing.
-- This is a thing.
-- This is a thing.
-- This is a thing.
-
-</Accordion>
-
-<Accordion client:load title="Should you use Negative margin?">
-
-- This is a thing.
-- This is a thing.
-- This is a thing.
-- This is a thing.
-- This is a thing.
-
-</Accordion>
+```html
+<Accordion client:load title="为什么你需要这样做？"> // Accordion 组件开始
+- 这是一个条目。 // 列表项
+</Accordion> // Accordion 组件结束
+```
 
 ---
 
-### Image
+### 图片
 
-![image](/images/image-placeholder.png)
+![图片](/images/image-placeholder.png)
+
+```markdown
+![图片](/images/image-placeholder.png)
+```
+
+填写的时候注意路径
 
 ---
 
-### Youtube video
+### Youtube 视频
 
-<Youtube client:load id="C0DPdy98e4c" title="Play:Youtube" />
+<Youtube client:load id="C0DPdy98e4c" title="播放:Youtube" />
+
+```html
+<Youtube client:load id="C0DPdy98e4c" title="播放:Youtube" />
+```
 
 ---
 
-### Custom video
+### 自定义视频
 
 <Video width="100%" src="https://www.w3schools.com/html/mov_bbb.mp4" />
+
+```html
+<Video width="100%" src="https://www.w3schools.com/html/mov_bbb.mp4" />
+```

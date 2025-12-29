@@ -10,7 +10,8 @@
     "preview": "astro preview",
     "format": "prettier -w .",
     "check": "astro check",
-    "new-post": "node scripts/new-post.js"
+    "new-post": "node scripts/new-post.js",
+    "new-author": "node scripts/new-author.js"
   },
   "dependencies": {
     "@astrojs/check": "^0.9.4",
