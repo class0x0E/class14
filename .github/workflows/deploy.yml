@@ -1,7 +1,17 @@
 name: Deploy Astro with npm
 on:
-  push:
-    branches: [ master ] 
+  # 1. 手动触发 (Manual Trigger)
+  workflow_dispatch:
+
+  # 2. 定时触发 (Schedule) - 类似“积累”的效果，比如每天或每周发布一次
+  # cron 语法: '分 时 日 月 周' (UTC时间)
+  # 例如：每天 UTC 0:00 (北京时间 8:00) 触发
+  # schedule:
+  #   - cron: '0 0 * * *'
+
+  # 3. 原有的 Push 触发 (已注释，停止每次提交都构建)
+  # push:
+  #   branches: [ master ] 
 permissions:
   contents: read
   pages: write

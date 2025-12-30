@@ -27,8 +27,9 @@ draft: false
 
 1. `date`和`draft`字段<mark>**不能**加引号</mark>，`title`字段可加可不加
 
-2. date字段的格式必须是YYYY-MM-DD,后面可以加时间，例如`2025-12-28T05:00:00Z`，表示UTC时间的2025年12月28日凌晨5点。如果不加时间，默认是当天的00:00:00时间。
-3. `categories`, `authors`, `tags`字段的值是一个数组，即使只有一个元素也需要用`[]`括起来。并且且数组内的元素**需要加引号**，例如:
+2. 如果有留空的字段，例如`meta_title`和`image`，记得填写成空字符串`""`，否则会报错。
+3. date字段的格式必须是YYYY-MM-DD,后面可以加时间，例如`2025-12-28T05:00:00Z`，表示UTC时间的2025年12月28日凌晨5点。如果不加时间，默认是当天的00:00:00时间。
+4. `categories`, `authors`, `tags`字段的值是一个数组，即使只有一个元素也需要用`[]`括起来。并且且数组内的元素**需要加引号**，例如:
 
     ```markdown
     ["分类1", "分类2"] ## 正确
@@ -40,10 +41,10 @@ draft: false
 
     `authors`字段用于表示文章的作者，可以有多个作者，填写时注意名字要和`src/content/authors/`文件夹下的**作者文件名**一致（不带扩展名）。例如`authors: ["wzm", "zzx"]`表示这篇文章的作者是`src/content/authors/wzm.md`和`src/content/authors/zzx.md`两个文件中定义的作者。
 
-4. `draft`字段的值只能是`true`或`false`，不能加引号。如果是`true`，表示这篇文章是草稿，不会被发布。
-5. `description`字段用于文章的简短描述，需要加引号，建议填写，这是没打开文章时的预览文本。
-6. `image`字段用于文章的封面图片。图片路径是**相对于** `public`文件夹的路径，例如`/images/posts/cover.jpg`表示图片在`public/images/posts/cover.jpg`。<mark>一般把封面图片放在</mark>`public/images/posts/`文件夹下。
-7. 每个人写文章的时候注意一下`categories`和`tags`里内容的复用率，避免出现有100个几乎一样的category然后每个里面只有一篇文章的情况。
+5. `draft`字段的值只能是`true`或`false`，不能加引号。如果是`true`，表示这篇文章是草稿，不会被发布。
+6. `description`字段用于文章的简短描述，需要加引号，建议填写，这是没打开文章时的预览文本。
+7. `image`字段用于文章的封面图片。图片路径是**相对于** `public`文件夹的路径，例如`/images/posts/cover.jpg`表示图片在`public/images/posts/cover.jpg`。<mark>一般把封面图片放在</mark>`public/images/posts/`文件夹下。
+8. 每个人写文章的时候注意一下`categories`和`tags`里内容的复用率，避免出现有100个几乎一样的category然后每个里面只有一篇文章的情况。
 
 ---
 
