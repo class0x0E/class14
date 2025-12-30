@@ -1,6 +1,7 @@
 ---
 import Share from "@/components/Share.astro";
 import SimilarPosts from "@/components/SimilarPosts.astro";
+import FloatingTOC from "@/components/FloatingTOC";
 import { getSinglePage } from "@/lib/contentParser.astro";
 import dateFormat from "@/lib/utils/dateFormat";
 import similerItems from "@/lib/utils/similarItems";
@@ -19,6 +20,7 @@ const { title, description, authors, categories, image, date, tags } =
 ---
 
 <section class="section">
+  <FloatingTOC client:load />
   <div class="container">
     <article class="row justify-center">
       <div class="md:col-10 text-center">
