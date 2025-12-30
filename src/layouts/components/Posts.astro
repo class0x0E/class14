@@ -92,7 +92,13 @@ const { className, posts, fluid } = Astro.props;
             {post.data.title}
           </a>
         </h3>
-        <p class="text-text line-clamp-2">{plainify(post.body ?? "")}</p>
+        <p class="text-text">
+          {
+            post.data.description
+              ? post.data.description
+              : plainify(post.body?.slice(0, 120) ?? "")
+          }
+        </p>
       </div>
     ))
   }

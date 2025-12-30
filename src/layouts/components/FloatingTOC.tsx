@@ -6,6 +6,7 @@ const FloatingTOC = () => {
   const [isDragging, setIsDragging] = useState(false);
   const [dragOffset, setDragOffset] = useState({ x: 0, y: 0 });
   const [isVisible, setIsVisible] = useState(false); // 控制目录显示
+  const [isExpanded, setIsExpanded] = useState(true); // 控制目录展开/收起
   const tocRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -19,7 +20,15 @@ const FloatingTOC = () => {
     const elements = Array.from(content.querySelectorAll('h1, h2, h3, h4, h5, h6'));
     const validHeadings = elements.filter(el => {
         // 过滤掉在.tab-content内的标题
-        return !el.closest('.tab-content');
+        // 检查元素的所有祖先，看是否有包含 'tab-content' 类的
+        let parent = el.parentElement;
+        while (parent) {
+            if (parent.classList.contains('tab-content')) {
+                return false;
+            }
+            parent = parent.parentElement;
+        }
+        return true;
     }).map((el, index) => {
         if (!el.id) {
             el.id = `heading-${index}`;
@@ -88,19 +97,18 @@ const FloatingTOC = () => {
             padding: '10px',
             boxShadow: '0 4px 12px rgba(0,0,0,0.1)',
             width: '250px',
-            maxHeight: '60vh',
-            overflowY: 'auto',
+            maxHeight: isExpanded ? '60vh' : 'auto', // 收起时自动高度
+            overflowY: isExpanded ? 'auto' : 'hidden', // 收起时隐藏滚动条
             cursor: isDragging ? 'grabbing' : 'default',
-            color: 'var(--color-text)'
+            color: 'var(--color-text)',
+            transition: 'max-height 0.3s ease' // 添加平滑过渡效果
         }}
     >
         <div
-            onMouseDown={handleMouseDown}
             style={{
-                cursor: 'grab',
-                paddingBottom: '8px',
-                borderBottom: '1px solid var(--color-border)',
-                marginBottom: '8px',
+                paddingBottom: isExpanded ? '8px' : '0', // 收起时减少底部内边距
+                borderBottom: isExpanded ? '1px solid var(--color-border)' : 'none', // 收起时移除底部边框
+                marginBottom: isExpanded ? '8px' : '0', // 收起时移除底部外边距
                 fontWeight: 'bold',
                 userSelect: 'none',
                 display: 'flex',
@@ -108,40 +116,74 @@ const FloatingTOC = () => {
                 alignItems: 'center'
             }}
         >
-            <span>目录</span>
-            <span style={{fontSize: '12px', color: '#888'}}>::</span>
+            {/* 拖拽区域 */}
+            <div 
+                onMouseDown={handleMouseDown}
+                style={{ 
+                    cursor: 'grab', 
+                    flex: 1,
+                    display: 'flex',
+                    alignItems: 'center'
+                }}
+            >
+                <span>目录</span>
+            </div>
+            
+            {/* 展开/收起开关 */}
+            <div 
+                onClick={(e) => {
+                    e.stopPropagation();
+                    setIsExpanded(!isExpanded);
+                }}
+                style={{
+                    cursor: 'pointer',
+                    padding: '4px',
+                    fontSize: '12px',
+                    color: '#888',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center'
+                }}
+                title={isExpanded ? "收起" : "展开"}
+            >
+                {isExpanded ? '▼' : '▲'}
+            </div>
         </div>
-        <ul style={{ listStyle: 'none', padding: 0, margin: 0 }}>
-            {headings.map(heading => (
-                <li key={heading.id} style={{ 
-                    marginLeft: `${(heading.level - 1) * 10}px`, 
-                    marginBottom: '6px',
-                    lineHeight: '1.2'
-                }}>
-                    <a
-                        href={`#${heading.id}`}
-                        style={{
-                            textDecoration: 'none',
-                            color: 'inherit',
-                            fontSize: '14px',
-                            display: 'block',
-                            overflow: 'hidden',
-                            textOverflow: 'ellipsis',
-                            whiteSpace: 'nowrap',
-                            opacity: 0.8
-                        }}
-                        onMouseOver={(e) => e.currentTarget.style.opacity = '1'}
-                        onMouseOut={(e) => e.currentTarget.style.opacity = '0.8'}
-                        onClick={(e) => {
-                            e.preventDefault();
-                            document.getElementById(heading.id)?.scrollIntoView({ behavior: 'smooth' });
-                        }}
-                    >
-                        {heading.text}
-                    </a>
-                </li>
-            ))}
-        </ul>
+        
+        {/* 目录列表，仅在展开时显示 */}
+        {isExpanded && (
+            <ul style={{ listStyle: 'none', padding: 0, margin: 0 }}>
+                {headings.map(heading => (
+                    <li key={heading.id} style={{ 
+                        marginLeft: `${(heading.level - 1) * 10}px`, 
+                        marginBottom: '6px',
+                        lineHeight: '1.2'
+                    }}>
+                        <a
+                            href={`#${heading.id}`}
+                            style={{
+                                textDecoration: 'none',
+                                color: 'inherit',
+                                fontSize: '14px',
+                                display: 'block',
+                                overflow: 'hidden',
+                                textOverflow: 'ellipsis',
+                                whiteSpace: 'nowrap',
+                                opacity: 0.8
+                            }}
+                            onMouseOver={(e) => e.currentTarget.style.opacity = '1'}
+                            onMouseOut={(e) => e.currentTarget.style.opacity = '0.8'}
+                            onClick={(e) => {
+                                e.preventDefault();
+                                document.getElementById(heading.id)?.scrollIntoView({ behavior: 'smooth' });
+                            }}
+                        >
+                            {heading.text}
+                        </a>
+                    </li>
+                ))}
+            </ul>
+        )}
     </div>
   );
 };
